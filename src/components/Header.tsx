@@ -1,15 +1,8 @@
 "use client";
 
-import {
-  Share2,
-  LayoutGrid,
-  Search,
-  Map,
-  ChevronDown,
-  X,
-  Zap,
-} from "lucide-react";
+import { Share2, Search, Map, ChevronDown, X, Zap } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 interface HeaderProps {
   searchQuery: string;
@@ -44,118 +37,90 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-[100] w-full bg-white/70 backdrop-blur-xl border-b border-slate-200/50">
-      <div className="flex items-center justify-between h-16 md:h-20 px-4 md:px-6 xl:px-12 gap-3 md:gap-8">
-        {/* Logo Section */}
-        <div className="flex items-center shrink-0 gap-4 md:gap-8">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-2 md:gap-4 cursor-pointer group"
+    <header className="sticky top-0 z-[100] w-full bg-blue-800 shadow-lg border-b border-white/5">
+      <div className="flex items-center justify-between h-14 md:h-[60px] px-4 md:px-6 gap-4">
+        {/* LEFT: Branding (Quieter) */}
+        <div className="flex items-center shrink-0 w-auto md:w-56 gap-2">
+          <div
+            className="flex items-center gap-2 cursor-pointer opacity-90 hover:opacity-100 transition-opacity"
             onClick={() => window.location.reload()}
           >
-            <div className="relative">
-              <div className="absolute inset-0 bg-primary/20 rounded-2xl blur-xl group-hover:bg-primary/30 transition-all"></div>
-              <div className="relative bg-primary p-2 md:p-2.5 rounded-2xl shadow-lg shadow-primary/20 group-hover:rotate-6 transition-all duration-500">
-                <LayoutGrid className="text-white w-5 h-5 md:w-6 md:h-6" />
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <h1 className="text-base md:text-xl font-bold tracking-tight text-slate-900 leading-none">
-                Jamb<span className="text-primary">Portal</span>
-              </h1>
-              <div className="hidden sm:flex items-center gap-2 mt-1.5">
-                <div className="relative flex h-2 w-2">
-                  <div className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></div>
-                  <div className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></div>
-                </div>
-                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">
-                  Mapping Engine v2.0
-                </span>
-              </div>
-            </div>
-          </motion.div>
+            <Image
+              src="/logo.png"
+              alt="JambPortal Logo"
+              width={140}
+              height={45}
+              className="h-8 md:h-10 w-auto object-contain"
+              priority
+            />
+          </div>
         </div>
 
-        {/* Search & Filter Area - MOVED FROM SIDEBAR */}
-        <div className="flex-1 max-w-5xl flex items-center gap-3 md:gap-6">
-          <div className="relative flex-1 group">
-            <div className="absolute inset-y-0 left-3 md:left-5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
-              <Search className="w-4 h-4 md:w-5 md:h-5" />
+        {/* CENTER: Hero Search & Controls */}
+        <div className="flex-1 flex justify-center max-w-3xl items-center gap-2 md:gap-3">
+          {/* 1. HERO SEARCH INPUT */}
+          <div className="flex-1 max-w-md relative group">
+            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+              <Search className="w-4 h-4 text-blue-300 group-focus-within:text-white transition-colors" />
             </div>
             <input
               type="text"
-              placeholder="Search centers..."
+              placeholder="Search centers or towns..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-100/50 border border-slate-200/60 focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 rounded-2xl py-2.5 md:py-3.5 pl-10 md:pl-14 pr-10 md:pr-12 text-xs md:text-sm font-medium text-slate-700 placeholder:text-slate-400 outline-none transition-all"
+              className="w-full h-10 bg-blue-900/40 border border-white/10 rounded-lg pl-9 pr-8 text-white placeholder:text-blue-300/50 text-sm font-medium focus:ring-2 focus:ring-secondary/50 focus:border-secondary/50 focus:bg-blue-900/60 outline-none transition-all shadow-inner hover:border-white/20"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute inset-y-0 right-3 md:right-5 flex items-center text-slate-300 hover:text-slate-500 transition-colors"
-                title="Clear search"
+                className="absolute inset-y-0 right-2 flex items-center text-blue-400 hover:text-white transition-colors"
               >
-                <X size={16} className="stroke-[3px]" />
+                <X size={14} />
               </button>
             )}
           </div>
 
-          {/* Region Select */}
-          <div className="relative hidden md:block w-72 shrink-0">
-            <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-slate-400">
-              <Map className="w-4 h-4" />
-            </div>
+          {/* 2. REGION SELECTOR (Separated Pill) */}
+          <div className="hidden sm:flex relative items-center max-w-[150px] bg-blue-800/80 border border-white/10 rounded-lg h-10 px-2 focus-within:ring-2 focus-within:ring-blue-500/50 transition-all hover:border-white/20">
             <select
               value={selectedState}
               onChange={(e) => setSelectedState(e.target.value)}
-              className="w-full bg-slate-100/50 border border-slate-200/60 hover:bg-white hover:border-slate-300 focus:bg-white focus:border-primary rounded-2xl py-3.5 pl-12 pr-12 text-sm font-semibold text-slate-700 appearance-none outline-none cursor-pointer transition-all"
+              className="w-full bg-transparent border-none text-blue-100 text-xs font-medium focus:ring-0 pl-1 pr-6 py-0 appearance-none cursor-pointer hover:text-white transition-colors [&>option]:text-slate-900 truncate"
             >
-              <option value="">All Regions</option>
+              <option value="">Select Region</option>
               {states.map((state) => (
                 <option key={state} value={state}>
                   {state}
                 </option>
               ))}
             </select>
-            <div className="absolute inset-y-0 right-5 flex items-center pointer-events-none text-slate-400">
-              <ChevronDown className="w-4 h-4" />
-            </div>
+            <ChevronDown className="absolute right-2 text-blue-400 w-3 h-3 pointer-events-none" />
           </div>
+
+          {/* 3. PRIMARY ACTION (Distinct Button) */}
+          <button className="bg-secondary hover:bg-yellow-300 text-primary font-bold text-xs px-5 h-10 rounded-lg uppercase tracking-wide transition-all shadow-md active:scale-95 flex items-center justify-center shrink-0">
+            Search
+          </button>
         </div>
 
-        {/* Global Actions */}
-        <div className="flex items-center gap-3 md:gap-6 shrink-0">
-          <div className="hidden lg:flex items-center bg-slate-100 p-1.5 rounded-2xl border border-slate-200/60">
-            <button className="px-5 py-2 rounded-xl bg-white shadow-sm text-[10px] font-bold uppercase tracking-widest text-slate-900 transition-all">
-              Vector
-            </button>
-            <button className="px-4 py-2 rounded-xl text-slate-400 text-[10px] font-bold uppercase tracking-widest hover:text-slate-600 transition-all">
-              Satellite
-            </button>
-          </div>
-
-          <div className="h-10 w-[1px] bg-slate-200 mx-2 hidden xl:block"></div>
-
+        {/* RIGHT: Secondary Tools (Minimal) */}
+        <div className="flex items-center justify-end w-auto md:w-56 gap-1 md:gap-2">
           {userLocation && (
-            <div className="hidden 2xl:flex items-center gap-2.5 px-5 py-2.5 bg-emerald-50 rounded-2xl border border-emerald-100 text-[10px] font-bold text-emerald-600 uppercase tracking-widest group cursor-help">
-              <Zap
-                size={12}
-                className="fill-emerald-600 group-hover:scale-125 transition-transform"
-              />
-              Smart Sort Active
-            </div>
+            <button
+              className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-blue-300 hover:text-white hover:bg-white/5 text-[10px] font-bold uppercase tracking-wide transition-all border border-transparent hover:border-white/10"
+              title="Sorted by proximity"
+            >
+              <Zap size={12} className="text-secondary/80" />
+              <span>Smart Sort</span>
+            </button>
           )}
 
           <button
             onClick={shareApp}
-            className="flex items-center gap-2 md:gap-4 px-4 md:px-10 py-2.5 md:py-3.5 rounded-2xl bg-slate-900 hover:bg-primary text-white transition-all shadow-xl shadow-slate-900/10 active:scale-95 group relative overflow-hidden min-w-[48px] md:min-w-[150px]"
+            className="flex items-center gap-2 px-3 py-2 text-blue-300 hover:text-white transition-colors text-xs font-medium rounded-lg hover:bg-white/5 active:scale-95"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-            <Share2 className="w-4 h-4 group-hover:scale-110 transition-transform" />
-            <span className="hidden md:inline text-[11px] font-bold uppercase tracking-[0.2em]">
-              Share
-            </span>
+            <Share2 className="w-4 h-4" />
+            <span className="hidden lg:inline">Share</span>
           </button>
         </div>
       </div>

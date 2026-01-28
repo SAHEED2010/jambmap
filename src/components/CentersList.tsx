@@ -6,6 +6,7 @@ import { CenterItem } from "./CenterItem";
 import { StatsBar } from "./StatsBar";
 import { SearchX, FilterX, ListFilter, Zap } from "lucide-react";
 import { CentersListSkeleton } from "./Skeletons";
+import { EmptyState } from "./ui/EmptyState";
 
 interface CentersListProps {
   centers: JambCenter[];
@@ -115,31 +116,7 @@ export const CentersList: React.FC<CentersListProps> = ({
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-24 px-10 text-center animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            <div className="relative mb-10">
-              <div className="absolute -inset-6 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
-              <div className="relative bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-premium">
-                <SearchX
-                  size={64}
-                  strokeWidth={1.5}
-                  className="text-slate-200"
-                />
-              </div>
-            </div>
-            <h3 className="text-2xl font-black text-indigo-950 tracking-tight">
-              No Centers Found
-            </h3>
-            <p className="text-slate-500 max-w-[260px] mt-4 text-sm font-medium leading-relaxed">
-              We couldn't find any centers matching your selection. Try
-              adjusting your filters.
-            </p>
-            <button
-              onClick={() => window.location.reload()}
-              className="mt-10 px-10 py-4 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all active:scale-95 border border-slate-200"
-            >
-              Reset All
-            </button>
-          </div>
+          <EmptyState onReset={() => window.location.reload()} />
         )}
       </div>
     </div>

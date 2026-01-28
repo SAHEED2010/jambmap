@@ -1,4 +1,5 @@
 @import "tailwindcss";
+/* Re-triggering build - Fix Styling */
 @import "leaflet/dist/leaflet.css";
 
 /* 
@@ -9,15 +10,18 @@
   --font-sans: var(--font-outfit), var(--font-inter), ui-sans-serif, system-ui;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular;
 
-  --color-primary: #5850ec;
-  /* Radiant Indigo */
-  --color-primary-dark: #4338ca;
-  --color-primary-light: #818cf8;
+  /* Blue & Yellow Theme */
+  --color-primary: #1d4ed8;
+  /* Blue-700 - Strong Corporate Blue */
+  --color-primary-dark: #1e40af;
+  /* Blue-800 */
+  --color-primary-light: #60a5fa;
+  /* Blue-400 */
 
-  --color-secondary: #0ea5e9;
-  /* Cyan Sky */
-  --color-accent: #f43f5e;
-  /* Rose */
+  --color-secondary: #facc15;
+  /* Yellow-400 - Vibrant Yellow */
+  --color-accent: #eab308;
+  /* Yellow-500 - Deep Yellow */
 
   --color-slate-50: #f8fafc;
   --color-slate-100: #f1f5f9;

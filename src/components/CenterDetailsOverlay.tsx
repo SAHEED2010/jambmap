@@ -3,7 +3,9 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { JambCenter } from "@/types/center";
-import { X, Navigation, Phone, Globe, ShieldCheck, Zap } from "lucide-react";
+import { X, Navigation, Globe, ShieldCheck, Zap } from "lucide-react";
+import { Badge } from "./ui/Badge";
+import { formatDistance } from "@/lib/utils";
 
 interface CenterDetailsOverlayProps {
   center: JambCenter | null;
@@ -48,14 +50,16 @@ export const CenterDetailsOverlay: React.FC<CenterDetailsOverlayProps> = ({
           <div className="relative space-y-8">
             {/* Badges */}
             <div className="flex flex-wrap items-center gap-2.5">
-              <div className="px-3.5 py-1.5 bg-primary text-white rounded-xl text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-primary/20">
+              <Badge variant="solid" className="shadow-lg shadow-primary/20">
                 Verified Center
-              </div>
+              </Badge>
               {center.distance && (
-                <div className="px-3.5 py-1.5 bg-emerald-50 text-emerald-600 rounded-xl text-[10px] font-bold uppercase tracking-widest border border-emerald-100/50 flex items-center gap-2">
-                  <Zap size={12} className="fill-emerald-600" />
-                  {center.distance.toFixed(1)} km Away
-                </div>
+                <Badge
+                  variant="emerald"
+                  icon={<Zap size={12} className="fill-emerald-600" />}
+                >
+                  {formatDistance(center.distance)} Away
+                </Badge>
               )}
             </div>
 
